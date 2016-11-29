@@ -1,0 +1,17 @@
+.countdown-days:after,
+.countdown-hours:after,
+.countdown-minutes:after{
+  content: ':';
+  line-height: 95px;
+  font-size: 60px;
+  vertical-align: top;
+  display: inline-block;
+  color: #000;
+}
+
+.countdown-days,
+.countdown-hours,
+.countdown-minutes,
+.countdown-seconds {
+  display: inline-block;
+}
