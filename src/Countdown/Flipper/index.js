@@ -1,8 +1,9 @@
 import React from 'react';
+import cn from 'classnames';
 import schema from './schema.js';
-import './style.scss';
+import st from './style.scss';
 
-class Flipper extends React.PureComponent {
+class Flipper extends React.Component {
 
   constructor(props) {
     super(props);
@@ -11,7 +12,7 @@ class Flipper extends React.PureComponent {
      * @type {object}
      * @property {object} toggle - flag for switching index of current digit index
      */
-    this.state = { toggle: false }
+    this.state = {};
   }
 
   /**
@@ -71,14 +72,18 @@ class Flipper extends React.PureComponent {
    * @return {ReactElement} markup
    */
   render() {
-    return <div className='cards'>
+    return <div className={cn(st.cards, this.props.className)}>
       {this.getRange(this.props.now).map((val, i) => {
         return <div
           key={`flip-card${i}`}
-          className={`card${val == this.props.now ? ' now' : ''}`}>
-            <div className='sides'>
-              {['front', 'back'].map(key => <div key={`side${key}`} className={`side ${key}`}>
-                <div className='side-num'>
+          className={cn(st.card, this.props.cardClassName, {
+            [st.now]: val == this.props.now
+          })}>
+            <div className={cn(st.sides, this.props.sidesWrapClassName)}>
+              {['front', 'back'].map(key => <div
+                key={`side${key}`}
+                className={cn(st.side, this.props.sideClassName, st[key])}>
+                <div className={cn(st['side-num'], this.props.numClassName)}>
                   {key == 'front' ? val : this.getCount(val, 'next')}
                 </div>
               </div>)}

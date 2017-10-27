@@ -1,9 +1,10 @@
 import React from 'react';
-import Flipper from '../Flipper';
+import cn from 'classnames';
+import Flipper from './Flipper';
 import schema from './schema.js';
-import './style.scss';
+import st from './style.scss';
 
-class Countdown extends React.PureComponent {
+class Countdown extends React.Component {
 
   constructor(props) {
     super(props);
@@ -14,7 +15,7 @@ class Countdown extends React.PureComponent {
      */
     this.state = {
       diff: this.getDiffObject()
-    }
+    };
   }
 
   /**
@@ -78,19 +79,22 @@ class Countdown extends React.PureComponent {
       seconds: [ [0,5], [0,9] ]
     };
 
-    return <div className='countdown'>
+    return <div className={cn(st.countdown, this.props.className)}>
       {Object.keys(this.state.diff).map(key => <div
-          key={key}
-          className={`countdown-${key}`}>
-            {Array(2).fill(0).map((_, i) => <Flipper
-              key={`${key}${i}`}
-              reverse
-              now={+this.getFormattedVal(this.state.diff[key])[i]}
-              min={forks[key][i][0]}
-              max={forks[key][i][1]}
-            />)}
-        </div>
-      )}
+        key={key}
+        className={cn(st[`countdown-${key}`], this.props.slotClassName)}>
+        {Array(2).fill(0).map((_, i) => <Flipper
+          key={`${key}${i}`}
+          reverse
+          className={this.props.cardsClassName}
+          cardClassName={this.props.cardClassName}
+          sidesWrapClassName={this.props.sidesWrapClassName}
+          sideClassName={this.props.sideClassName}
+          numClassName={this.props.numClassName}
+          now={+this.getFormattedVal(this.state.diff[key])[i]}
+          min={forks[key][i][0]}
+          max={forks[key][i][1]}/>)}
+      </div>)}
     </div>;
   }
 };
