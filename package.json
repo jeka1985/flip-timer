@@ -1,36 +1,16 @@
 {
-  "name": "box-kit",
-  "version": "1.0.0",
-  "description": "Webpack + React start kit",
-  "main": "index.js",
-  "scripts": {
-    "test": "test",
-    "build": "webpack --progress",
-    "dev": "webpack-dev-server"
-  },
+  "name": "react-flip-counter",
+  "version": "0.4.0",
+  "description": "React flip countdown timer",
+  "main": "src/Countdown/index.js",
   "author": "Eugene Yemelin",
   "license": "ISC",
-  "babel": {
-    "presets": [
-      "es2015",
-      "react"
-    ]
-  },
-  "devDependencies": {
-    "babel-core": "^6.18.2",
-    "babel-loader": "^6.2.7",
-    "babel-preset-es2015": "^6.18.0",
-    "babel-preset-react": "^6.16.0",
-    "css-loader": "^0.26.0",
-    "extract-text-webpack-plugin": "^1.0.1",
-    "node-sass": "^3.13.0",
-    "postcss-loader": "^1.1.1",
-    "sass-loader": "^4.0.2",
-    "webpack": "^1.13.3",
-    "webpack-dev-server": "^1.16.2"
-  },
   "dependencies": {
-    "react": "^15.4.1",
-    "react-dom": "^15.4.1"
+    "classnames": "^2.2.5",
+    "prop-types": "^15.6.0"
+  },
+  "peerDependencies": {
+    "react": "^16.1.0",
+    "react-dom": "^16.1.0"
   }
 }

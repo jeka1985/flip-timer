@@ -1,9 +1,10 @@
 import React from 'react';
-import Flipper from '../Flipper';
+import cn from 'classnames';
+import Flipper from './Flipper';
 import schema from './schema.js';
-import './style.scss';
+import st from './style.scss';
 
-class Countdown extends React.PureComponent {
+class Countdown extends React.Component {
 
   constructor(props) {
     super(props);
@@ -14,14 +15,29 @@ class Countdown extends React.PureComponent {
      */
     this.state = {
       diff: this.getDiffObject()
-    }
+    };
   }
 
   /**
    * Create second interval
    */
   componentDidMount() {
-    this.interval = window.setInterval(() => this.updateTime(), 1000);
+    if (!this.isTimeOver(this.state.diff)) {
+      this.interval = window.setInterval(() => {
+        this.setState({ diff: this.getDiffObject() });
+        this.isTimeOver() && this.stopCount();
+      }, 1000);
+    } else {
+      this.stopCount();
+    }
+  }
+
+  /**
+   * Clears interval and drop notification
+   */
+  stopCount() {
+    window.clearInterval(this.interval);
+    this.props.onStop && this.props.onStop();
   }
 
   /**
@@ -36,7 +52,7 @@ class Countdown extends React.PureComponent {
    * @return {Object} formatted value
    */
   getDiffObject() {
-    var ms = Math.abs(this.props.stop - (new Date()).getTime()),
+    var ms = Math.abs(this.props.stop.getTime() - (new Date()).getTime()),
         s = Math.floor(ms / 1000),
         m = Math.floor(s / 60),
         h = Math.floor(m / 60),
@@ -51,10 +67,11 @@ class Countdown extends React.PureComponent {
   }
 
   /**
-   * Update state with calcualted diff object
+   * Return flag stop date reached
+   * @return {Boolean}
    */
-  updateTime() {
-    this.setState({ diff: this.getDiffObject() });
+  isTimeOver() {
+    return (new Date()).getTime() > this.props.stop.getTime();
   }
 
   /**
@@ -76,21 +93,25 @@ class Countdown extends React.PureComponent {
       hours: [ [0,2], [0,4] ],
       minutes: [ [0,5], [0,9] ],
       seconds: [ [0,5], [0,9] ]
-    };
+    },
+    isOver = this.isTimeOver();
 
-    return <div className='countdown'>
+    return <div className={cn(st.countdown, this.props.className)}>
       {Object.keys(this.state.diff).map(key => <div
-          key={key}
-          className={`countdown-${key}`}>
-            {Array(2).fill(0).map((_, i) => <Flipper
-              key={`${key}${i}`}
-              reverse
-              now={+this.getFormattedVal(this.state.diff[key])[i]}
-              min={forks[key][i][0]}
-              max={forks[key][i][1]}
-            />)}
-        </div>
-      )}
+        key={key}
+        className={cn(st[`countdown-${key}`], this.props.slotClassName)}>
+        {Array(2).fill(0).map((_, i) => <Flipper
+          key={`${key}${i}`}
+          reverse
+          className={this.props.cardsClassName}
+          cardClassName={this.props.cardClassName}
+          sidesWrapClassName={this.props.sidesWrapClassName}
+          sideClassName={this.props.sideClassName}
+          numClassName={this.props.numClassName}
+          now={!isOver ? +this.getFormattedVal(this.state.diff[key])[i] : 0}
+          min={forks[key][i][0]}
+          max={forks[key][i][1]}/>)}
+      </div>)}
     </div>;
   }
 };
