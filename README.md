@@ -2,6 +2,7 @@
 
 > React countdown timer,  like an 80-s flip clocks
 May be useful for stuff like promos, sales, launch landings and so on.
+DEMO - https://jeka1985.github.io/
 
 ## Install
 ```
