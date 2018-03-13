@@ -1,8 +1,11 @@
 # react-flip-counter
 
+![screen](https://user-images.githubusercontent.com/3533939/37330435-282292b0-26b2-11e8-91b1-d7ca25fbb327.png)
+
 > React countdown timer,  like an 80-s flip clocks
 May be useful for stuff like promos, sales, launch landings and so on.
-DEMO - https://jeka1985.github.io/
+
+https://jeka1985.github.io/
 
 ## Install
 ```
